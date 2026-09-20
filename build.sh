@@ -62,38 +62,39 @@ for PLATFORM in "${PLATFORMS[@]}"; do
         CMASK_BIN="cmask.exe"
     fi
 
-    ZIP_NAME="mask-v${VERSION}-${GOOS}-${GOARCH}.zip"
+    PACKAGE_NAME="mask-v${VERSION}-${GOOS}-${GOARCH}"
+    ZIP_NAME="${PACKAGE_NAME}.zip"
 
     echo "--> Compiling mask and cmask for ${GOOS}/${GOARCH}..."
 
     # Reset temporary staging directory
 
     rm -rf "$BUILD_DIR"
-    mkdir -p "$BUILD_DIR"
+    mkdir -p "$BUILD_DIR/$PACKAGE_NAME"
 
     # Compile stripped binary for mask
 
     CGO_ENABLED=0 GOOS="$GOOS" GOARCH="$GOARCH" go build \
         -ldflags="-s -w" \
-        -o "$BUILD_DIR/$MASK_BIN" \
+        -o "$BUILD_DIR/$PACKAGE_NAME/$MASK_BIN" \
         mask.go
 
     # Compile stripped binary for cmask
 
     CGO_ENABLED=0 GOOS="$GOOS" GOARCH="$GOARCH" go build \
         -ldflags="-s -w" \
-        -o "$BUILD_DIR/$CMASK_BIN" \
+        -o "$BUILD_DIR/$PACKAGE_NAME/$CMASK_BIN" \
         cmask.go
 
     # Copy config file
 
-    cp config.json "$BUILD_DIR/"
+    cp config.json "$BUILD_DIR/$PACKAGE_NAME/"
 
-    # Create ZIP with default compression
+    # Create ZIP with package directory as the root
 
     (
         cd "$BUILD_DIR"
-        zip -q -r "../$DIST_DIR/$ZIP_NAME" .
+        zip -q -r "../$DIST_DIR/$ZIP_NAME" "$PACKAGE_NAME"
     )
 
     # Cleanup
@@ -118,7 +119,6 @@ echo "    Created $DIST_DIR/SHA256SUMS.txt"
 # 6. Final output
 
 echo ""
-
 echo "================================================="
 echo " All packages built successfully in '${DIST_DIR}/'"
 echo "================================================="
