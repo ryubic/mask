@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	cmd := exec.Command("mask", "-c")
+	cmd := exec.Command("./mask", "-c")
 
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout

@@ -154,6 +154,8 @@ func copyToClipboard(content string) error {
 			cmd = exec.Command("xclip", "-selection", "clipboard")
 		} else if _, err := exec.LookPath("xsel"); err == nil {
 			cmd = exec.Command("xsel", "--clipboard", "--input")
+		} else if _, err := exec.LookPath("clip.exe"); err == nil {
+			cmd = exec.Command("clip.exe") // WSL
 		} else {
 			return fmt.Errorf("no clipboard utility found")
 		}
