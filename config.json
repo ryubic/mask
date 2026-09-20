@@ -1,0 +1,102 @@
+{
+  "rules": [
+    {
+      "name": "OS Username",
+      "enabled": true,
+      "pattern": "\\b$USERNAME\\b",
+      "replacement": "[USER]",
+      "case_sensitive": false
+    },
+    {
+      "name": "Desktop Hostname",
+      "enabled": true,
+      "pattern": "\\b$HOSTNAME\\b",
+      "replacement": "[HOST]",
+      "case_sensitive": false
+    },
+    {
+      "name": "AWS Access Keys",
+      "enabled": true,
+      "pattern": "\\b(AKIA|ASIA)[0-9A-Z]{16}\\b",
+      "replacement": "$1[REDACTED_AWS_KEY]",
+      "case_sensitive": true
+    },
+    {
+      "name": "GitHub Tokens",
+      "enabled": true,
+      "pattern": "\\b(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{36}\\b",
+      "replacement": "[REDACTED_GITHUB_TOKEN]",
+      "case_sensitive": true
+    },
+    {
+      "name": "GitLab Tokens",
+      "enabled": true,
+      "pattern": "\\bglpat-[A-Za-z0-9_-]{20,}\\b",
+      "replacement": "[REDACTED_GITLAB_TOKEN]",
+      "case_sensitive": true
+    },
+    {
+      "name": "Google API Keys",
+      "enabled": true,
+      "pattern": "\\bAIza[A-Za-z0-9_-]{35}\\b",
+      "replacement": "[REDACTED_GOOGLE_KEY]",
+      "case_sensitive": true
+    },
+    {
+      "name": "JWT Tokens",
+      "enabled": true,
+      "pattern": "\\beyJ[A-Za-z0-9_=-]+\\.[A-Za-z0-9_=-]+\\.[A-Za-z0-9_=-]+\\b",
+      "replacement": "[REDACTED_JWT]",
+      "case_sensitive": true
+    },
+    {
+      "name": "Bearer Tokens",
+      "enabled": true,
+      "pattern": "\\bBearer\\s+[A-Za-z0-9_\\-.~+/=]{20,}",
+      "replacement": "Bearer [REDACTED_TOKEN]",
+      "case_sensitive": false
+    },
+    {
+      "name": "Slack Tokens",
+      "enabled": true,
+      "pattern": "\\bxox[baprs]-[A-Za-z0-9-]{10,}\\b",
+      "replacement": "[REDACTED_SLACK_TOKEN]",
+      "case_sensitive": true
+    },
+    {
+      "name": "IPv4 Addresses",
+      "enabled": true,
+      "pattern": "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b",
+      "replacement": "[IP_HIDDEN]",
+      "case_sensitive": false
+    },
+    {
+      "name": "IPv6 Addresses",
+      "enabled": true,
+      "pattern": "(?i)(?:[0-9a-f]{1,4}:){2,7}[0-9a-f]{0,4}",
+      "replacement": "[IP_HIDDEN]",
+      "case_sensitive": true
+    },
+    {
+      "name": "Emails",
+      "enabled": true,
+      "pattern": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b",
+      "replacement": "[EMAIL_HIDDEN]",
+      "case_sensitive": false
+    },
+    {
+      "name": "Credential URLs",
+      "enabled": true,
+      "pattern": "https?://[^\\s/@]+:[^\\s/@]+@[^\\s]+",
+      "replacement": "[URL_REDACTED]",
+      "case_sensitive": false
+    },
+    {
+      "name": "Generic Key-Value Secrets",
+      "enabled": true,
+      "pattern": "\\b(password|pass|passwd|secret|api[_-]?key|access[_-]?token|auth[_-]?token)\\b(\\s*[:=]\\s*)([\"']?)[^\"'\\s]+\\3",
+      "replacement": "${1}${2}${3}[REDACTED]${3}",
+      "case_sensitive": false
+    }
+  ]
+}
